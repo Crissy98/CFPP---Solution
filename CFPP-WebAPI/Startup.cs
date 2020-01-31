@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using CFPP.Database.Context;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace CFPP_WebAPI
 {
@@ -24,7 +26,13 @@ namespace CFPP_WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //db context and connection string
+            services.AddDbContextPool<CFPPDbContext>(options => options.UseSqlServer(
+               Configuration.GetConnectionString("DbConnectionString"),
+               b => b.MigrationsAssembly("CFPP.WebAPI")));
+
             services.AddControllers();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
