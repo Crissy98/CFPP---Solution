@@ -12,6 +12,6 @@ namespace CFPP.Database.iRepositories
         Customer Add(Customer customer);
         Customer Edit(Customer Customer);
         Customer Delete(int CustomerId);
-        void Save();
+        //void Save();
     }
 }

@@ -3,6 +3,7 @@ using CFPP.Database.Entities;
 using CFPP.Database.iRepositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CFPP.Database.Repositories
@@ -15,6 +16,9 @@ namespace CFPP.Database.Repositories
             this._context = context;
         }
 
+        private List<Customer> _customerList;
+
+
         public void Dispose()
         {
             _context.Dispose();
@@ -22,32 +26,55 @@ namespace CFPP.Database.Repositories
 
         public Customer Add(Customer customer)
         {
-            throw new NotImplementedException();
+
+             _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+            return customer;
         }
 
         public Customer Delete(int CustomerId)
         {
-            throw new NotImplementedException();
+            //fisrt we want to find and retrieve the customer object that we want to delete
+            Customer customer=_context.Customers.Find(CustomerId);
+
+            if (customer != null)
+            {
+                _context.Customers.Remove(customer);
+                _context.SaveChanges();
+            }
+
+            return customer;
         }
 
-        public Customer Edit(Customer Customer)
-        {
-            throw new NotImplementedException();
-        }
-
+      
         public List<Customer> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Customers.ToList();
         }
 
+        //get Customer by Code
         public Customer GetById(string CustomerCode)
         {
-            throw new NotImplementedException();
+            Customer customersByCode=_context.Customers.Find(CustomerCode);
+            return customersByCode;
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            
+        }
+
+        public Customer Edit(Customer customerChanged)
+        {
+            var modifiedCustomer = _context.Customers.Attach(customerChanged);
+
+            modifiedCustomer.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+            _context.SaveChanges();
+
+            //return updated custmer object
+            return customerChanged;
         }
     }
 }
