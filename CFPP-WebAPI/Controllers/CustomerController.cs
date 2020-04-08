@@ -30,17 +30,45 @@ namespace CFPP_WebAPI.Controllers
          public IActionResult GetAll()
         {
             var customers = _customerRepository.GetAll();
+
+            if (customers == null)
+               
+                return NotFound();
+
+            else
+
             return Ok(customers);
         }
 
+        [Route("~/api/customer/{id}")]
+        [HttpGet("{id}")]
+        public ActionResult<Customer> GetCustomerById(int id)
+        {
+            Customer customer = _customerRepository.GetById(id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return customer;
+        } 
 
         [Route("~/api/customer")]
         //[ResponseType(typeof(Customer[]))]
         [HttpPost]
-        public IActionResult Add(Customer customer)
+        public IActionResult AddNewCustomer(Customer customer)
         {
-            var customers = _customerRepository.Add(customer);
-            return Ok(customers);
+            Customer newCustomer = _customerRepository.Add(customer);
+            return Ok(newCustomer);
+        }
+
+        [HttpPut("{id}")]
+        public Customer Put(int id,Customer changedCustomer)
+        {
+            var customerChanged = _customerRepository.Edit(id, changedCustomer);
+
+            return customerChanged;
         }
     }
 }

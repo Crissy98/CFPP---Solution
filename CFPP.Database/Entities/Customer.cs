@@ -22,8 +22,7 @@ namespace CFPP.Database.Entities
         [Required(ErrorMessage = "VAT Code is required")]
         [MaxLength(10, ErrorMessage = "Length must be less then 50 characters")]
         public string VATCode { get; set; }
-
-
+        
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
 

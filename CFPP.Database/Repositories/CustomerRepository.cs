@@ -35,11 +35,20 @@ namespace CFPP.Database.Repositories
                 return customers;
             
         }
- 
+
+        //get Customer by VATCode
+        public Customer GetById(int CustomerId)
+        {
+            Customer customer = _context.Customers.Find(CustomerId);
+            return customer;
+        }
+
+
         public Customer Add(Customer customer)
         {
 
              _context.Customers.Add(customer);
+           
             _context.SaveChanges();
 
             return customer;
@@ -60,28 +69,26 @@ namespace CFPP.Database.Repositories
         }
 
    
-        //get Customer by Code
-        public Customer GetById(string CustomerCode)
-        {
-            Customer customersByCode=_context.Customers.Find(CustomerCode);
-            return customersByCode;
-        }
+        
 
         public void Save()
         {
             
         }
 
-        public Customer Edit(Customer customerChanged)
+        public Customer Edit(int id, Customer customerChanged)
         {
-            var modifiedCustomer = _context.Customers.Attach(customerChanged);
 
-            modifiedCustomer.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var modifiedCustomer = _context.Customers.Find(id);
+
+            modifiedCustomer.CustomerName = customerChanged.CustomerName;
+            modifiedCustomer.VATCode = customerChanged.VATCode;
+            modifiedCustomer.Email = customerChanged.Email;
+            modifiedCustomer.PhoneNo = customerChanged.PhoneNo;
 
             _context.SaveChanges();
 
-            //return updated custmer object
-            return customerChanged;
+            return modifiedCustomer;
         }
     }
 }

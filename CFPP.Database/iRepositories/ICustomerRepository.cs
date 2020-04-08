@@ -8,9 +8,9 @@ namespace CFPP.Database.iRepositories
     public interface ICustomerRepository : IDisposable
     {
         List<Customer> GetAll();
-        Customer GetById(string CustomerCode);
+        Customer GetById(int CustomerId);
         Customer Add(Customer customer);
-        Customer Edit(Customer Customer);
+        Customer Edit(int id,Customer Customer);
         Customer Delete(int CustomerId);
         //void Save();
     }

@@ -14,6 +14,15 @@ namespace CFPP.Database.Context
 
         //DBSets
         public virtual DbSet<Customer> Customers { get; set; }
-        //public virtual DbSet<Case> Cases { get; set; }
+
+
+        //model Builder
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Customer>().HasIndex(s => s.CustomerId).IsUnique();
+            //modelBuilder.Entity<Case>().HasIndex(s => s.CustomerCode).IsUnique();
+        }
     }
 }
