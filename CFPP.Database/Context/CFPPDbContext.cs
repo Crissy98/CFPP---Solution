@@ -14,6 +14,6 @@ namespace CFPP.Database.Context
 
         //DBSets
         public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Case> Cases { get; set; }
+        //public virtual DbSet<Case> Cases { get; set; }
     }
 }

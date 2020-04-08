@@ -10,20 +10,32 @@ namespace CFPP.Database.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
+        //DbContext Object - interaction with the database
         private readonly CFPPDbContext _context;
+
+        //the constructor
         public CustomerRepository(CFPPDbContext context)
         {
             this._context = context;
         }
 
-        private List<Customer> _customerList;
-
-
+        //private List<Customer> _customerList;
+        
         public void Dispose()
         {
             _context.Dispose();
         }
 
+        //Get All Customers
+        public List<Customer> GetAll()
+        {
+            var customers = _context.Customers.ToList();
+
+            
+                return customers;
+            
+        }
+ 
         public Customer Add(Customer customer)
         {
 
@@ -47,12 +59,7 @@ namespace CFPP.Database.Repositories
             return customer;
         }
 
-      
-        public List<Customer> GetAll()
-        {
-            return _context.Customers.ToList();
-        }
-
+   
         //get Customer by Code
         public Customer GetById(string CustomerCode)
         {
