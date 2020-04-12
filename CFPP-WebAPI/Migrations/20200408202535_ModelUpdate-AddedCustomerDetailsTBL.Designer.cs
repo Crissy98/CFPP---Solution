@@ -4,44 +4,22 @@ using CFPP.Database.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CFPP_WebAPI.Migrations
 {
     [DbContext(typeof(CFPPDbContext))]
-    partial class CFPPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200408202535_ModelUpdate-AddedCustomerDetailsTBL")]
+    partial class ModelUpdateAddedCustomerDetailsTBL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CFPP.Database.Entities.Case", b =>
-                {
-                    b.Property<int>("CaseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("CustomerCode")
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CaseTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DPD")
-                        .HasColumnType("int");
-
-                    b.HasKey("CaseId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Case");
-                });
 
             modelBuilder.Entity("CFPP.Database.Entities.Customer", b =>
                 {
@@ -109,13 +87,6 @@ namespace CFPP_WebAPI.Migrations
                         .IsUnique();
 
                     b.ToTable("CustomerDetails");
-                });
-
-            modelBuilder.Entity("CFPP.Database.Entities.Case", b =>
-                {
-                    b.HasOne("CFPP.Database.Entities.Customer", "customer")
-                        .WithMany("Cases")
-                        .HasForeignKey("CustomerId");
                 });
 
             modelBuilder.Entity("CFPP.Database.Entities.CustomerDetails", b =>

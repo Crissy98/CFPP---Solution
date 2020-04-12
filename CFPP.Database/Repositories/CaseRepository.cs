@@ -4,11 +4,10 @@ using CFPP.Database.iRepositories;
 
 namespace CFPP.Database.Repositories
 {
-    public class CustomerRepository : Repository<Customer>, ICustomerRepository
+    public class CaseRepository : Repository<Case>, ICaseRepository
     {
-
-        public CustomerRepository(CFPPDbContext context)
-           : base(context)
+        public CaseRepository(CFPPDbContext context)
+            : base(context)
         {
         }
     }

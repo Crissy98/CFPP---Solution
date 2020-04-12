@@ -4,14 +4,16 @@ using CFPP.Database.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CFPP_WebAPI.Migrations
 {
     [DbContext(typeof(CFPPDbContext))]
-    partial class CFPPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200408205233_UpdateModel-AddedCaseTBL")]
+    partial class UpdateModelAddedCaseTBL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,11 +32,17 @@ namespace CFPP_WebAPI.Migrations
                     b.Property<string>("CaseTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<int?>("DPD")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("OverdueBallance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("TotalBallance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("CaseId");
 
@@ -115,7 +123,9 @@ namespace CFPP_WebAPI.Migrations
                 {
                     b.HasOne("CFPP.Database.Entities.Customer", "customer")
                         .WithMany("Cases")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CFPP.Database.Entities.CustomerDetails", b =>

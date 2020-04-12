@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CFPP.Database.Entities
 {
@@ -22,12 +20,10 @@ namespace CFPP.Database.Entities
         [Required(ErrorMessage = "VAT Code is required")]
         [MaxLength(10, ErrorMessage = "Length must be less then 50 characters")]
         public string VATCode { get; set; }
-        
-        [Required(ErrorMessage = "Email is required")]
-        public string Email { get; set; }
 
-        [Required(ErrorMessage = "Phone No is required")]
-        public string PhoneNo { get; set; }
+        public CustomerDetails customerDetails { get; set; }
+
+        public ICollection<Case> Cases { get; set; }
 
     }
 }

@@ -34,6 +34,7 @@ namespace CFPP_WebAPI
                b => b.MigrationsAssembly("CFPP-WebAPI")));
 
             services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<ICaseRepository, CaseRepository>();
 
             services.AddControllers();
 

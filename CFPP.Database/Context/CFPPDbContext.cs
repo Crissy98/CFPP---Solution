@@ -1,8 +1,5 @@
 ﻿using CFPP.Database.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CFPP.Database.Context
 {
@@ -14,7 +11,7 @@ namespace CFPP.Database.Context
 
         //DBSets
         public virtual DbSet<Customer> Customers { get; set; }
-
+        public virtual DbSet<Case> Cases { get; set; }
 
         //model Builder
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,6 +20,19 @@ namespace CFPP.Database.Context
 
             modelBuilder.Entity<Customer>().HasIndex(s => s.CustomerId).IsUnique();
             //modelBuilder.Entity<Case>().HasIndex(s => s.CustomerCode).IsUnique();
+
+            //Data Seeding - Test
+
+            modelBuilder.Entity<Customer>()
+        .HasData(
+            new Customer
+            {
+                CustomerId = 4,
+                CustomerName = "John Doe",
+                VATCode = "JD232456",
+
+            }
+        );
         }
     }
 }

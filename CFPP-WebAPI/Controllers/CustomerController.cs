@@ -14,7 +14,7 @@ namespace CFPP_WebAPI.Controllers
     [Route("[controller]")]
     public class CustomerController : ControllerBase
     {
-        //Repository
+        //IGenericRepository
         private readonly ICustomerRepository _customerRepository;
 
         //ctor
@@ -27,24 +27,24 @@ namespace CFPP_WebAPI.Controllers
         [Route("~/api/customer")]
         //[ResponseType(typeof(Student[]))]
         [HttpGet]
-         public IActionResult GetAll()
+        public IActionResult GetAll()
         {
             var customers = _customerRepository.GetAll();
 
             if (customers == null)
-               
+
                 return NotFound();
 
             else
 
-            return Ok(customers);
+                return Ok(customers);
         }
 
         [Route("~/api/customer/{id}")]
         [HttpGet("{id}")]
-        public ActionResult<Customer> GetCustomerById(int id)
+        public ActionResult<Customer> GetById(int id)
         {
-            Customer customer = _customerRepository.GetById(id);
+            Customer customer = _customerRepository.Get(id);
 
             if (customer == null)
             {
@@ -52,23 +52,17 @@ namespace CFPP_WebAPI.Controllers
             }
 
             return customer;
-        } 
+        }
 
         [Route("~/api/customer")]
-        //[ResponseType(typeof(Customer[]))]
+        //POST: api/customer
         [HttpPost]
-        public IActionResult AddNewCustomer(Customer customer)
+        public IActionResult AddCustomer(Customer customer)
         {
-            Customer newCustomer = _customerRepository.Add(customer);
-            return Ok(newCustomer);
+            _customerRepository.Add(customer);
+            return Ok(customer);
         }
 
-        [HttpPut("{id}")]
-        public Customer Put(int id,Customer changedCustomer)
-        {
-            var customerChanged = _customerRepository.Edit(id, changedCustomer);
-
-            return customerChanged;
-        }
+    
     }
 }
